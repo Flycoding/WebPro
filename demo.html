@@ -107,6 +107,17 @@
             $('tbody:eq(' + i + ')').append($('<tr></tr>').html("<td>" + list[j].code + "</td><td>" + list[j].name + "</td>"));
         }
     }
+    var tabhost = $("<div></div>").attr("class", "col-md-12");
+    var tabs = $("<ul></ul>").attr("class", "nav nav-tabs nav-justified");
+    for(var i =0;i<json.activities.length;++i) {
+        var activity = json.activities[i];
+        var li = $("<li></li>");
+        if(i==0) {
+            li.attr("class","active");
+        }
+        li.append($("<a></a>").attr("href", "#tab-index-" + i).text(activity.activity));
+
+    }
 </script>
 </body>
 </html>

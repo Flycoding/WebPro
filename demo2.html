@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Hello UUI</title>
+
+    <!--修改成你的css目录-->
+    <link rel="stylesheet" href="uui/css/u.base.min.css">
+    <link rel="stylesheet" href="uui/css/u.ext.min.css">
+</head>
+<body>
+<!--在这里编写你的代码-->
+<div class="container">
+</div>
+<script src="jquery.min.js"></script>
+<script src="uui/js/u.base.min.js"></script>
+<script src="uui/js/u.ext.min.js"></script>
+<script>
+    var json = {
+        activities: [
+            {
+                activity: "活动1",
+                list: [{code: "1000", name: "AA"}, {code: "1001", name: "BB"}, {code: "1002", name: "CC"}]
+            },
+            {
+                activity: "活动2",
+                list: [{code: "1003", name: "DD"}, {code: "1004", name: "EE"}, {code: "1005", name: "FF"}]
+            }
+        ]
+    };
+
+    var tabhost = $("<div></div>").addClass("col-md-12");
+    var tabs = $("<ul></ul>").addClass("nav nav-tabs nav-justified");
+    for (var i = 0; i < json.activities.length; ++i) {
+        var activity = json.activities[i];
+        var li = $("<li></li>");
+        if (i == 0) {
+            li.addClass("active")
+        }
+        li.append($("<a></a>").attr("href", "#tab-index-" + i).text(activity.activity));
+        tabs.append(li);
+    }
+    tabhost.append(tabs);
+
+    var tabcontent = $("<div></div>").addClass("tab-content");
+    for (var i = 0; i < json.activities.length; ++i) {
+        var pane = $("<div></div>").addClass("tab-pane");
+        if(i==0) {
+            pane.addClass("active");
+        }
+        pane.attr("id","tab-index-"+i);
+        tabcontent.append(pane);
+
+        var table = $("<table></table>").addClass("table table-hover");
+        pane.append(table);
+
+        var thead = $("<thead><tr><th>编码</th><th>名称</th></tr></thead>");
+        table.append(thead);
+
+        var tbody = $("<tbody></tbody>");
+        table.append(tbody);
+
+        var activity = json.activities[i];
+        var name = activity.activity;
+        var list = activity.list;
+        var length = list.length;
+        for (var j = 0; j < length; ++j) {
+            tbody.append($('<tr></tr>').html("<td>" + list[j].code + "</td><td>" + list[j].name + "</td>"));
+        }
+    }
+    tabhost.append(tabcontent);
+    $(".container").append(tabhost);
+</script>
+<script>
+    $('.nav a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+</script>
+</body>
+</html>
