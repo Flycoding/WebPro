@@ -30,7 +30,62 @@
 <script src="uui/js/u.base.min.js"></script>
 <script src="uui/js/u.ext.min.js"></script>
 <script>
-    var json = {
+
+    function populate(json) {
+        var tabhost = $("<div></div>").addClass("col-md-12");
+        var tabs = $("<ul></ul>").addClass("nav nav-tabs nav-justified");
+        for (var i = 0; i < json.activities.length; ++i) {
+            var activity = json.activities[i];
+            var li = $("<li></li>");
+            if (i == 0) {
+                li.addClass("active")
+            }
+            li.append($("<a></a>").attr("href", "#tab-index-" + i).text(activity.activity));
+            tabs.append(li);
+        }
+        tabhost.append(tabs);
+        var tabcontent = $("<div></div>").addClass("tab-content");
+        for (var i = 0; i < json.activities.length; ++i) {
+            var pane = $("<div></div>").addClass("tab-pane");
+            if (i == 0) {
+                pane.addClass("active");
+            }
+            pane.attr("id", "tab-index-" + i);
+            tabcontent.append(pane);
+            var table = $("<table></table>").addClass("table table-hover");
+            pane.append(table);
+            var thead = $("<thead><tr><th>编码</th><th>名称</th></tr></thead>");
+            table.append(thead);
+            var tbody = $("<tbody></tbody>");
+            table.append(tbody);
+            var activity = json.activities[i];
+            var name = activity.activity;
+            var list = activity.list;
+            var length = list.length;
+            for (var j = 0; j < length; ++j) {
+                tbody.append($('<tr></tr>').html("<td>" + list[j].code + "</td><td>" + list[j].name + "</td>"));
+            }
+        }
+        tabhost.append(tabcontent);
+        $(".container").prepend(tabhost);
+        $('tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                $('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+        $("#cancel").click(function () {
+            tabhost.hide();
+        });
+        $("#ok").click(function () {
+            tabhost.show();
+            alert($("tr.selected>td:first").text());
+        });
+    }
+    populate({
         activities: [
             {
                 activity: "活动1",
@@ -41,65 +96,9 @@
                 list: [{code: "1003", name: "DD"}, {code: "1004", name: "EE"}, {code: "1005", name: "FF"}]
             }
         ]
-    };
-
-    var tabhost = $("<div></div>").addClass("col-md-12");
-    var tabs = $("<ul></ul>").addClass("nav nav-tabs nav-justified");
-    for (var i = 0; i < json.activities.length; ++i) {
-        var activity = json.activities[i];
-        var li = $("<li></li>");
-        if (i == 0) {
-            li.addClass("active")
-        }
-        li.append($("<a></a>").attr("href", "#tab-index-" + i).text(activity.activity));
-        tabs.append(li);
-    }
-    tabhost.append(tabs);
-
-    var tabcontent = $("<div></div>").addClass("tab-content");
-    for (var i = 0; i < json.activities.length; ++i) {
-        var pane = $("<div></div>").addClass("tab-pane");
-        if (i == 0) {
-            pane.addClass("active");
-        }
-        pane.attr("id", "tab-index-" + i);
-        tabcontent.append(pane);
-
-        var table = $("<table></table>").addClass("table table-hover");
-        pane.append(table);
-
-        var thead = $("<thead><tr><th>编码</th><th>名称</th></tr></thead>");
-        table.append(thead);
-
-        var tbody = $("<tbody></tbody>");
-        table.append(tbody);
-
-        var activity = json.activities[i];
-        var name = activity.activity;
-        var list = activity.list;
-        var length = list.length;
-        for (var j = 0; j < length; ++j) {
-            tbody.append($('<tr></tr>').html("<td>" + list[j].code + "</td><td>" + list[j].name + "</td>"));
-        }
-    }
-    tabhost.append(tabcontent);
-    $(".container").prepend(tabhost);
-
-    $('tbody').on('click', 'tr', function () {
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            $('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
     });
-    $("#cancel").click(function () {
-        tabhost.hide();
-    });
-    $("#ok").click(function () {
-        tabhost.show();
-        alert($("tr.selected>td:first").text());
+    $.getJSON("url", "{}", function (json) {
+        populate(json);
     });
 </script>
 <script>
