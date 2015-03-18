@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Hello UUI</title>
+
+    <!--修改成你的css目录-->
+    <link rel="stylesheet" href="uui/css/u.base.min.css">
+    <link rel="stylesheet" href="uui/css/u.ext.min.css">
+</head>
+<body>
+
+<!--在这里编写你的代码-->
+<div class="container">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs nav-justified">
+            <li  class="active"><a href="#tab4-2-index">首页</a></li>
+            <li><a href="#tab4-2-hot">热门</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab4-2-index">
+                <h1>111</h1>
+                <h1>111</h1>
+                <h1>111</h1>
+                <h1>111</h1>
+                <h1>111</h1>
+            </div>
+            <div class="tab-pane" id="tab4-2-hot">
+                <h1>222</h1>
+                <h1>222</h1>
+                <h1>222</h1>
+                <h1>222</h1>
+                <h1>222</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!--在这里编写你的代码-->
+
+<!--修改成你的js目录-->
+<script src="jquery.min.js"></script>
+<script src="uui/js/u.base.min.js"></script>
+<script src="uui/js/u.ext.min.js"></script>
+<script type="text/javascript">
+    $('.nav a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+</script>
+</body>
+</html>
+  
