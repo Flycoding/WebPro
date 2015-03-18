@@ -85,20 +85,25 @@
             alert($("tr.selected>td:first").text());
         });
     }
-    populate({
+    var tmpJson = {
         activities: [
             {
-                activity: "活动1",
+                activity: "Activity1",
                 list: [{code: "1000", name: "AA"}, {code: "1001", name: "BB"}, {code: "1002", name: "CC"}]
             },
             {
-                activity: "活动2",
+                activity: "Activity2",
                 list: [{code: "1003", name: "DD"}, {code: "1004", name: "EE"}, {code: "1005", name: "FF"}]
             }
         ]
-    });
-    $.getJSON("url", "{}", function (json) {
+    };
+    //    populate(tmpJson);
+    $.getJSON("http://127.0.0.1:8080/hello?username=haha&age=18", function (json) {
         populate(json);
+        $('.nav a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
     });
 </script>
 <script>
