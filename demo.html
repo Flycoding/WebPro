@@ -14,16 +14,15 @@
     <link rel="stylesheet" href="uui/css/u.ext.min.css">
 </head>
 <body>
-
 <!--在这里编写你的代码-->
 <div class="container">
     <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
-            <li class="active"><a href="#tab4-6-index">活动1</a></li>
-            <li><a href="#tab4-6-hot">活动2</a></li>
+            <li class="active"><a href="#tab-index-1">活动1</a></li>
+            <li><a href="#tab-index-2">活动2</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="tab4-6-index">
+            <div class="tab-pane active" id="tab-index-1">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -47,7 +46,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane" id="tab4-6-hot">
+            <div class="tab-pane" id="tab-index-2">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -80,11 +79,34 @@
 <script src="jquery.min.js"></script>
 <script src="uui/js/u.base.min.js"></script>
 <script src="uui/js/u.ext.min.js"></script>
-<script type="text/javascript">
+<script>
     $('.nav a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
     });
+</script>
+<script>
+    var json = {
+        activities: [
+            {
+                activity: "活动1",
+                list: [{code: "1000", name: "AA"}, {code: "1001", name: "BB"}, {code: "1002", name: "CC"}]
+            },
+            {
+                activity: "活动2",
+                list: [{code: "1003", name: "DD"}, {code: "1004", name: "EE"}, {code: "1005", name: "FF"}]
+            }
+        ]
+    };
+    for (var i = 0; i < json.activities.length; ++i) {
+        var activity = json.activities[i];
+        var name = activity.activity;
+        var list = activity.list;
+        var length = list.length;
+        for (var j = 0; j < length; ++j) {
+            $('tbody:eq(' + i + ')').append($('<tr></tr>').html("<td>" + list[j].code + "</td><td>" + list[j].name + "</td>"));
+        }
+    }
 </script>
 </body>
 </html>
