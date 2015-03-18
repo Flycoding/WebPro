@@ -12,10 +12,19 @@
     <!--修改成你的css目录-->
     <link rel="stylesheet" href="uui/css/u.base.min.css">
     <link rel="stylesheet" href="uui/css/u.ext.min.css">
+    <style>
+        .selected {
+            background-color: #0ba195;
+        }
+    </style>
 </head>
 <body>
 <!--在这里编写你的代码-->
 <div class="container">
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-white" id="cancel">取消</button>
+        <button type="button" class="btn btn-success" id="ok">确定</button>
+    </div>
 </div>
 <script src="jquery.min.js"></script>
 <script src="uui/js/u.base.min.js"></script>
@@ -50,10 +59,10 @@
     var tabcontent = $("<div></div>").addClass("tab-content");
     for (var i = 0; i < json.activities.length; ++i) {
         var pane = $("<div></div>").addClass("tab-pane");
-        if(i==0) {
+        if (i == 0) {
             pane.addClass("active");
         }
-        pane.attr("id","tab-index-"+i);
+        pane.attr("id", "tab-index-" + i);
         tabcontent.append(pane);
 
         var table = $("<table></table>").addClass("table table-hover");
@@ -74,7 +83,24 @@
         }
     }
     tabhost.append(tabcontent);
-    $(".container").append(tabhost);
+    $(".container").prepend(tabhost);
+
+    $('tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            $('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+    $("#cancel").click(function () {
+        tabhost.hide();
+    });
+    $("#ok").click(function () {
+        tabhost.show();
+        alert($("tr.selected>td:first").text());
+    });
 </script>
 <script>
     $('.nav a').click(function (e) {
